@@ -1,24 +1,19 @@
 {
   "persons": [
     {
-      "name": "binoy",
-      "number": "8989898",
+      "name": "Soumya",
+      "number": "676767",
       "id": 1
     },
     {
-      "name": "soumya",
-      "number": "676767",
+      "name": "Rajan",
+      "number": "8787878",
       "id": 2
     },
     {
-      "name": "nila",
-      "number": "6565665",
+      "name": "Binoy",
+      "number": "96767676",
       "id": 3
-    },
-    {
-      "name": "rajan",
-      "number": "65433",
-      "id": 4
     }
   ]
 }
