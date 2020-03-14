@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import personService from "./services/persons";
-import Persons from "./components/Person";
-import Filter from "./components/personFilter";
-import Form from "./components/Form";
-import Notification from "./components/Notification";
+import React, { useState, useEffect } from 'react';
+import personService from './services/persons';
+import Persons from './components/Person';
+import Filter from './components/personFilter';
+import Form from './components/Form';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-  const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
-  const [searchString, setSearchString] = useState("");
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [searchString, setSearchString] = useState('');
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
 
   useEffect(() => {
-    console.log("effect");
+    console.log('effect');
     personService.getAll().then(initialPersons => {
-      console.log("promise fulfilled");
+      console.log('promise fulfilled');
       setPersons(initialPersons);
     });
   }, []);
-  console.log("render", persons.length, "persons");
+  console.log('render', persons.length, 'persons');
 
   const resetNotification = () => {
     setMessage(null);
@@ -29,14 +29,14 @@ const App = () => {
 
   const showSuccessNotification = message => {
     setMessage(message);
-    setMessageType("success");
+    setMessageType('success');
 
     setTimeout(() => resetNotification(), 5000);
   };
 
   const showErrorNotification = message => {
     setMessage(message);
-    setMessageType("error");
+    setMessageType('error');
 
     setTimeout(() => resetNotification(), 3000);
   };
@@ -54,7 +54,7 @@ const App = () => {
         .catch(error => {
           setPersons(persons.filter(p => p.id !== person.id));
           showErrorNotification(
-            `Information of ${personToRemove.name} has already been removed from server`
+            `Information of ${personToRemove.name} has already been removed from server`,
           );
         });
     }
@@ -65,8 +65,8 @@ const App = () => {
 
     personService.update(person.id, changedNumber).then(returnedPerson => {
       setPersons(persons.map(p => (p.id !== person.id ? p : returnedPerson)));
-      setNewName("");
-      setNewNumber("");
+      setNewName('');
+      setNewNumber('');
     });
   };
 
@@ -75,32 +75,28 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: persons.length + 1,
     };
-    console.log("persons", persons);
-    const existingPerson = persons.find(
-      p => p.name.toLowerCase() === newName.toLowerCase()
-    );
+    console.log('persons', persons);
+    const existingPerson = persons.find(p => p.name.toLowerCase() === newName.toLowerCase());
     if (existingPerson) {
-      console.log("In addName - in if  branch - persons", persons);
+      console.log('In addName - in if  branch - persons', persons);
       //window.alert(`${newName} is already added to phonebook`);
       if (
         window.confirm(
-          `${newName} is already added to phonebook, replace the old number with a new one?`
+          `${newName} is already added to phonebook, replace the old number with a new one?`,
         )
       ) {
         changeNumber(existingPerson);
-        showSuccessNotification(
-          `The number of ${existingPerson.name} has been changed.`
-        );
+        showSuccessNotification(`The number of ${existingPerson.name} has been changed.`);
       }
     } else {
-      console.log("In addName - in else branch - persons", persons);
+      console.log('In addName - in else branch - persons', persons);
       personService.create(nameObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson));
-        console.log("In addName - in else branch - persons", persons);
-        setNewName("");
-        setNewNumber("");
+        console.log('In addName - in else branch - persons', persons);
+        setNewName('');
+        setNewNumber('');
         showSuccessNotification(`Successfully added ${returnedPerson.name}`);
       });
     }
@@ -132,11 +128,7 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons
-        persons={persons}
-        searchString={searchString}
-        deleteButton={deleteButton}
-      />
+      <Persons persons={persons} searchString={searchString} deleteButton={deleteButton} />
     </div>
   );
 };
